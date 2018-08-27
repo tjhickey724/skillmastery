@@ -1,0 +1,39 @@
+extends layoutBS
+
+block content
+
+  h1 SkillMastery User
+  ul
+    li
+      | name: #{user.googlename}
+    li
+      | email: #{user.googleemail}
+  h2 Review Evidence
+  ul
+    each e in evidence
+      li
+        a(href="/evidenceItem/"+e._id)
+          | #{e.skill}
+          | -- "/evidenceItem/#{e._id}"
+  hr
+  h2 Delete Evidence
+  table.table.table-bordered.table-striped
+    thead
+      tr
+        th delete?
+        th email
+        th skill
+        th link
+        th description
+    tbody
+      each e in evidence
+        tr
+          td
+            input(name="evidenceID" value=e._id type="checkbox")
+          td #{e.student} --
+          td #{e.skill}
+          td
+            a(href=e.url) #{e.url}
+          td #{e.description}
+  input(type="submit" value="Delete checked items")
+  hr

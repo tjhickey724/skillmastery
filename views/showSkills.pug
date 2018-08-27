@@ -1,0 +1,46 @@
+extends layoutBS
+
+block content
+  h1 Skill List
+  h2 There are currently #{skills.length} skills
+  p This page has been visited #{counter} times since last reset
+  a(href="/skills/square") Try the Square app
+  ol
+    each val in skills
+      li #{val.name} --
+        i #{val.description}
+  h2 Here are the people in the system
+  ol
+    each person in people
+      li #{person.name}
+  h2 Here is the evidence
+  table.table.table-bordered.table-striped
+    tbody
+      each item in evidence
+        - let url = item.url
+        tr
+          td
+            |#{item.person}
+          td
+            |#{item.skill}
+          td
+            a(href=url) #{item.url}
+  hr
+  h1 Add your own evidence
+  form(method="post")
+    p This is a form!
+    br
+    | Skill --
+    select(name="skill")
+      each val in skills
+        option #{val.name}
+    br
+    | Student --
+    select(name="student")
+      each val in people
+        option #{val.name}
+    br
+    input(type="text" name="evidence" placeholder="URL of evidence")
+    br
+    button
+      |Submit

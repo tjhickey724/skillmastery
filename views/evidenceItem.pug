@@ -1,0 +1,13 @@
+extends layoutBS
+
+block content
+
+  h1 Evidence  for #{e.skill} by #{e.student}
+  br
+  h3 Evidence
+  pre
+    | #{e.evidence}
+  hr
+  h3 Student explanation of evidence
+  pre
+    | #{e.description}

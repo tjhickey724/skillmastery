@@ -1,0 +1,23 @@
+extends layoutBS
+
+block content
+  h1 Add a Student
+  form(method="post" action="saveStudent")
+    .formGroup
+      label student name
+      input(type="text" name="name")
+    .formGroup
+      label unetid
+      input(type="text" name="unetid" )
+    input(type="submit")
+  hr
+  h1 List of All Skills #{version} as of #{date}
+  form(method="post" action="deleteStudent")
+    ol
+      each s in studentsList
+        li
+          input(name="deleteName" value=s.name type="checkbox")
+          e #{s.name} --
+          i #{s.unetid}
+    input(type="submit" value="Delete checked items")
+    hr

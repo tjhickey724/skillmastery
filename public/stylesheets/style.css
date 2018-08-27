@@ -1,8 +1,22 @@
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #fffff0
 }
 
 a {
   color: #00B7FF;
+}
+
+.toplevel {
+  border-left: thick solid #997755;
+  padding-left:10px;
+  margin-left:50px
+}
+
+.jumbotron, .offwhite {
+  background-color: #fffff0
+}
+
+#skillDesc {
+  color:blue
 }

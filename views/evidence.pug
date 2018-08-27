@@ -1,0 +1,45 @@
+extends layoutBS
+
+block content
+  .jumbotron.offwhite
+    h1 Evidence of Mastery Page for #{user.googlename} ...
+    p Use this page to select a skill, add evidence of mastery, and justify it
+
+  form(method="post" action="saveEvidence")
+    .formGroup
+      label student name
+      input(type="text" name="student" readonly="true" value=user.googleemail)
+    .formGroup
+      h2 Skill Selection
+      p Select the skill you have mastered:
+        select#skill(name="skill")
+          option Select a skill
+          each s in skills
+            option #{s.name}
+    hr
+    #skillDesc
+    hr
+    .formGroup
+      h2 Evidence
+      p Cut/paste evidence of your mastery of the skill below
+      br
+      textarea(name="evidence" rows="10" cols="80")
+    hr
+    .formGroup
+      h2 Explanation
+      p explain what your evidence is and how it demonstrates mastery of the skill
+      br
+      textarea(name="description" rows="10" cols="80")
+    hr
+    input(type="submit")
+  hr
+  h1 List of All getAllEvidence
+  form(method="post" action="deleteEvidence")
+    ol
+      each e in evidence
+        li
+          a(href="/evidenceItem/"+e._id)  #{e.student}/#{e.skill}
+          input(name="evidenceID" value=e._id type="checkbox")
+    input(type="submit" value="Delete checked items")
+    hr
+    script(src="javascripts/evidence.js")

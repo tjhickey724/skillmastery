@@ -1,0 +1,10 @@
+extends layoutBS
+
+block content
+
+  h1 SkillMastery Users
+
+  ul
+    each u in users
+      li
+        a(href="/users/"+u._id) #{u.googlename}

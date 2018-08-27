@@ -1,0 +1,26 @@
+extends layoutBS
+
+block content
+  .jumbotron
+    h1 Add a Skill
+    p Use this page to add skills to the class
+  form(method="post" action="saveSkill")
+    .formGroup
+      label skill name
+      input(type="text" name="name")
+    .formGroup
+      label description
+      br
+      textarea(name="description" rows="10" cols="80")
+    input(type="submit")
+  hr
+  h1 List of All Skills
+  form(method="post" action="deleteSkill")
+    ol
+      each skill in skills
+        li
+          e #{skill.name}
+          input(name="deleteName" value=skill.name type="checkbox")
+          p #{skill.description}
+    input(type="submit" value="Delete checked items")
+    hr

@@ -1,5 +1,15 @@
 extends layoutBS
 
 block content
-  h1= title
-  p Welcome to #{title}
+  .jumbotron
+    h1 SkillMastery
+    p Evidence-based Grading!
+    //-
+      a.btn.btn-danger(href="/auth/google")
+        span.fa.fa-google-plus  Google
+      br
+      | logged in "#{loggedIn}"
+      br
+      | user: "#{(user&&user.googlename)}"
+      br
+      || This should be in a comment!
