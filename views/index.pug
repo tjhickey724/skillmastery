@@ -3,13 +3,27 @@ extends layoutBS
 block content
   .jumbotron
     h1 SkillMastery
-    p Evidence-based Grading!
-    //-
-      a.btn.btn-danger(href="/auth/google")
-        span.fa.fa-google-plus  Google
+    p Demonstrate your mastery
+
+  if loggedIn
+      p Enroll in a class with a 7 digit pin:
+      form(method="post" action="enroll")
+        input(type="text" rows="100%" name="pin")
+        input(type="submit" value="add class")
       br
-      | logged in "#{loggedIn}"
-      br
-      | user: "#{(user&&user.googlename)}"
-      br
-      || This should be in a comment!
+      h2 Classes
+      ol
+        each classV in classes
+          li
+            a(href="class/"+classV._id)
+              | #{classV.code}
+            |   pin: #{classV.pin} ownerEmail: #{classV.ownerEmail}
+      //-
+        a.btn.btn-danger(href="/auth/google")
+          span.fa.fa-google-plus  Google
+        br
+        | logged in "#{loggedIn}"
+        br
+        | user: "#{(user&&user.googlename)}"
+        br
+        || This should be in a comment!

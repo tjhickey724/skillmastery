@@ -14,7 +14,7 @@ html(lang="en")
             a.nav-link.active(href="/") Home
           li.nav-item
             a.nav-link.active(href="/about") About
-          if loggedIn
+          if loggedIn && classV
             if status=='teacher'
               li.nav-item
                 a.nav-link.active(href="/classes") Classes
@@ -31,6 +31,10 @@ html(lang="en")
           else
             li.nav-item
               a.nav-link.active(href="/login") Login
+      if classV
+        span(style="float:right")
+          | Currently Logged in to #{classV.code}
+
       block content
       script(src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous")
       script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous")

@@ -4,6 +4,28 @@ const Class = require( '../models/Class' );
 console.log("loading the classes Controller")
 
 
+exports.addClass = (req,res) => {
+  console.log('in addClass')
+  Class.findOne({pin:req.body.pin})
+    .exec()
+    .then((classV)=> {
+      if (classV){
+        req.session.classV = classV
+        res.render('class',{classV:classV})
+      } else {
+        res.send("please enter a valid course ID")
+      }
+
+    })
+    .catch((error)=>{
+      console.log(error.message)
+      return []
+    })
+    .then( ()=>{
+      console.log('addClass promise complete')
+    })
+}
+
 // this displays all of the classes
 exports.getAllClasses = ( req, res ) => {
   console.log('in getAllClasses')

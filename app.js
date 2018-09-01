@@ -67,6 +67,12 @@ app.use((req,res,next) => {
     console.log("user has been Authenticated")
     res.locals.user = req.user
     res.locals.loggedIn = true
+    if (req.session.classV){
+      res.locals.classV=req.session.classV
+      res.locals.classId = req.session.classV._id
+    } else {
+      res.locals.classV = ""
+    }
     if (req.user){
       if (req.user.googleemail=='tjhickey@brandeis.edu'){
         console.log("Owner has logged in")
@@ -140,6 +146,8 @@ app.get('/profile', isLoggedIn, function(req, res) {
         });*/
     });
 
+app.post('/enroll',classesController.addClass);
+
 
 app.get('/classes', classesController.getAllClasses );
 app.post('/saveClass', classesController.saveClass );
@@ -178,7 +186,7 @@ app.get('/users/:id',
         usersController.getUser)
 
 
-app.use('/', function(req, res, next) {
+app.use('/', classesController.attachClasses,function(req, res, next) {
   console.log("in / controller")
   res.render('index', { title: 'Skills Mastery App' });
 });
