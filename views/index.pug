@@ -14,9 +14,10 @@ block content
     ol
       each classV in classes
         li
-          a(href="class/"+classV._id)
+          a.btn.btn-primary.btn-sm(href="class/"+classV.pin)
             | #{classV.code}
           |   pin: #{classV.pin} ownerEmail: #{classV.ownerEmail}
+        br
     //-
       a.btn.btn-danger(href="/auth/google")
         span.fa.fa-google-plus  Google

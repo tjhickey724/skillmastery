@@ -6,7 +6,7 @@ console.log("loading the skills Controller")
 // this displays all of the skills
 exports.getAllSkills = ( req, res ) => {
   console.log('in getAllSkills')
-  Skill.find( {} )
+  Skill.find( {classCode:req.session.classV.code} )
     .exec()
     .then( ( skills ) => {
       res.render( 'skills', {
@@ -25,7 +25,7 @@ exports.getAllSkills = ( req, res ) => {
 
 exports.attachSkills = ( req, res, next ) => {
   console.log('in attachSkills')
-  Skill.find( {} )
+  Skill.find( {classCode:req.session.classV.code} )
     .exec()
     .then( ( skills ) => {
       res.locals.skills = skills
@@ -48,7 +48,8 @@ exports.saveSkill = ( req, res ) => {
   //console.dir(req)
   let newSkill = new Skill( {
     name: req.body.name,
-    description: req.body.description
+    description: req.body.description,
+    classCode: req.session.classV.code
   } )
 
   //console.log("skill = "+newSkill)
@@ -66,12 +67,12 @@ exports.deleteSkill = (req, res) => {
   console.log("in deleteSkill")
   let skillName = req.body.deleteName
   if (typeof(skillName)=='string') {
-      Skill.deleteOne({name:skillName})
+      Skill.deleteOne({name:skillName,classCode:req.session.classV.code})
            .exec()
            .then(()=>{res.redirect('/skills')})
            .catch((error)=>{res.send(error)})
   } else if (typeof(skillName)=='object'){
-      Skill.deleteMany({name:{$in:skillName}})
+      Skill.deleteMany({name:{$in:skillName},classCode:req.session.classV.code})
            .exec()
            .then(()=>{res.redirect('/skills')})
            .catch((error)=>{res.send(error)})

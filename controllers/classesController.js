@@ -3,6 +3,23 @@ const mongoose = require( 'mongoose' );
 const Class = require( '../models/Class' );
 console.log("loading the classes Controller")
 
+exports.selectClass = (req,res) => {
+  console.log("**** in selectClass *****")
+  console.dir(req.params)
+  Class.findOne({pin:req.params.pin})
+    .exec()
+    .then((classV)=>{
+      if (classV){
+        req.session.classV = classV
+        res.render('class',{classV:classV})
+      } else {
+        console.dir(classV)
+        res.send("please enter a valid pin, not pin="+req.params.pin)    
+      }
+
+    })
+
+}
 
 exports.addClass = (req,res) => {
   console.log('in addClass')

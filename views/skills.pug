@@ -19,7 +19,7 @@ block content
     ol
       each skill in skills
         li
-          e #{skill.name}
+          e #{skill.name} / #{skill.classCode}
           input(name="deleteName" value=skill.name type="checkbox")
           p #{skill.description}
     input(type="submit" value="Delete checked items")
