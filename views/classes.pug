@@ -1,0 +1,25 @@
+extends layoutBS
+
+block content
+  .jumbotron
+    h1 Add a Class
+    p Use this page to create a new class
+  form(method="post" action="saveClass")
+    .formGroup
+      label class code
+      input(type="text" name="code" placeholder="e.g. CS11a-02")
+    input(type="submit")
+  hr
+  h1 List of All Classes
+  form(method="post" action="deleteClass")
+    ol
+      each classV in classes
+        li
+          | class: #{classV.code}
+          input(name="deleteCode" value=classV.code type="checkbox")
+          br
+          | pin: #{classV.pin}
+          br
+          | ownerEmail: #{classV.ownerEmail}
+    input(type="submit" value="Delete checked items")
+    hr

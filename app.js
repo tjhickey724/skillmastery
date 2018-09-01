@@ -4,6 +4,7 @@ const
  path = require('path'),
  cookieParser = require('cookie-parser'),
  logger = require('morgan'),
+ classesController = require('./controllers/classesController'),
  skillsController = require('./controllers/skillsController'),
  evidenceController = require('./controllers/evidenceController'),
  studentsController = require('./controllers/studentsController'),
@@ -139,6 +140,10 @@ app.get('/profile', isLoggedIn, function(req, res) {
         });*/
     });
 
+
+app.get('/classes', classesController.getAllClasses );
+app.post('/saveClass', classesController.saveClass );
+app.post('/deleteClass', classesController.deleteClass );
 // here are our regular app routes ...
 // we require them to be logged in to access the skills page
 app.get('/skills', skillsController.getAllSkills );
