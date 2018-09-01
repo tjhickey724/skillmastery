@@ -6,7 +6,8 @@ var evidenceSchema = Schema( {
   student: String,
   skill: String,
   evidence: String,
-  description: String
+  description: String,
+  classCode: String
 } );
 
 module.exports = mongoose.model( 'Evidence', evidenceSchema );

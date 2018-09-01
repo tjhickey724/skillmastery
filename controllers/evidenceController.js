@@ -11,7 +11,7 @@ exports.getAllEvidence = ( req, res ) => {
   console.log(req.user.googleemail != 'tjhickey@brandeis.edu')
   let selector = {}
   if (req.user.googleemail != 'tjhickey@brandeis.edu'){
-    selector = {student:req.user.googleemail}
+    selector = {student:req.user.googleemail,classCode:res.locals.classV.code}
   }
   Evidence.find( selector )
     .exec()
@@ -34,7 +34,7 @@ exports.getAllEvidence = ( req, res ) => {
 
 exports.attachEvidence = ( req, res, next ) => {
   console.log('in attachEvidence')
-  Evidence.find( {student:res.locals.user.googleemail} )
+  Evidence.find( {student:res.locals.user.googleemail,classCode:res.locals.classV.code} )
     .exec()
     .then( ( evidence ) => {
       res.locals.evidence = evidence
@@ -79,6 +79,7 @@ exports.saveEvidence = ( req, res ) => {
     skill: req.body.skill,
     evidence: req.body.evidence,
     description: req.body.description,
+    classCode: res.locals.classV.code
   } )
 
   //console.log("skill = "+newSkill)
