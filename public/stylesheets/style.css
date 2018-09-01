@@ -1,19 +1,19 @@
-body {
+body2 {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background-color: #fffff0
+  background-color: #ffffff
 }
 
 a {
   color: #00B7FF;
 }
 
-.toplevel {
+.toplevelOLD {
   border-left: thick solid #997755;
   padding-left:10px;
   margin-left:50px
 }
 
-.jumbotron, .offwhite {
+.offwhite {
   background-color: #fffff0
 }
 

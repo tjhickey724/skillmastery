@@ -1,29 +1,28 @@
 extends layoutBS
 
 block content
-  .jumbotron
+  div.jumbotron
     h1 SkillMastery
-    p Demonstrate your mastery
-
+    if loggedIn
+        p Enroll in a class with a 7 digit pin:
+        form(method="post" action="enroll")
+          input(type="text" rows="100%" name="pin")
+          input(type="submit" value="add class")
   if loggedIn
-      p Enroll in a class with a 7 digit pin:
-      form(method="post" action="enroll")
-        input(type="text" rows="100%" name="pin")
-        input(type="submit" value="add class")
+    br
+    h2 Classes
+    ol
+      each classV in classes
+        li
+          a(href="class/"+classV._id)
+            | #{classV.code}
+          |   pin: #{classV.pin} ownerEmail: #{classV.ownerEmail}
+    //-
+      a.btn.btn-danger(href="/auth/google")
+        span.fa.fa-google-plus  Google
       br
-      h2 Classes
-      ol
-        each classV in classes
-          li
-            a(href="class/"+classV._id)
-              | #{classV.code}
-            |   pin: #{classV.pin} ownerEmail: #{classV.ownerEmail}
-      //-
-        a.btn.btn-danger(href="/auth/google")
-          span.fa.fa-google-plus  Google
-        br
-        | logged in "#{loggedIn}"
-        br
-        | user: "#{(user&&user.googlename)}"
-        br
-        || This should be in a comment!
+      | logged in "#{loggedIn}"
+      br
+      | user: "#{(user&&user.googlename)}"
+      br
+      || This should be in a comment!
