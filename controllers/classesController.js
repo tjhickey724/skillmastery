@@ -52,7 +52,6 @@ exports.saveClass = ( req, res ) => {
   //console.dir(req)
   let newcode = 1000000+Math.floor(8999999*Math.random())
   let newClass = new Class( {
-    _id: new mongoose.Types.ObjectId(),
     code: req.body.code,
     pin: newcode,
     ownerEmail: req.user.googleemail
