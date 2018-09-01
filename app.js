@@ -146,7 +146,7 @@ app.get('/profile', isLoggedIn, function(req, res) {
         });*/
     });
 
-app.post('/enroll',classesController.addClass);
+app.post('/enroll',classesController.lookupClass,classesController.addClass);
 app.get('/class/:pin',classesController.selectClass);
 
 

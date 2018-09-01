@@ -9,7 +9,8 @@ var userSchema = Schema( {
   googletoken: String,
   googlename:String,
   googleemail:String,
-  description: String
+  description: String,
+  classIds:[Schema.Types.ObjectId]
 } );
 
 module.exports = mongoose.model( 'User', userSchema );
