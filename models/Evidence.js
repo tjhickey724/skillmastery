@@ -7,7 +7,11 @@ var evidenceSchema = Schema( {
   skill: String,
   evidence: String,
   description: String,
-  classCode: String
+  classCode: String,
+  accepted: String,
+  review: String,
+  reviewDate: Date,
+  reviewerEmail: String
 } );
 
 module.exports = mongoose.model( 'Evidence', evidenceSchema );

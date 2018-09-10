@@ -9,9 +9,9 @@ exports.getAllEvidence = ( req, res ) => {
   console.log('in getAllEvidence')
   console.dir(req.user)
   console.log(req.user.googleemail != 'tjhickey@brandeis.edu')
-  let selector = {}
-  if (req.user.googleemail != 'tjhickey@brandeis.edu'){
-    selector = {student:req.user.googleemail,classCode:res.locals.classV.code}
+  let selector = {student:req.user.googleemail,classCode:res.locals.classV.code}
+  if (res.locals.status=='teacher' || res.locals.status=='ta'){
+    selector = {classCode:res.locals.classV.code}
   }
   Evidence.find( selector )
     .exec()
@@ -55,7 +55,7 @@ exports.getEvidenceItem = ( req, res, next ) => {
   Evidence.findOne(objId) //{"_id": objId})
     .exec()
     .then( ( evidence ) => {
-      console.dir(evidence)
+      //console.dir(evidence)
       res.render('evidenceItem',{e:evidence})
     } )
     .catch( ( error ) => {
@@ -79,7 +79,12 @@ exports.saveEvidence = ( req, res ) => {
     skill: req.body.skill,
     evidence: req.body.evidence,
     description: req.body.description,
-    classCode: res.locals.classV.code
+    classCode: res.locals.classV.code,
+    accepted: "awaiting review",
+    review: "no review yet",
+    reviewDate: "none",
+    reviewerEmail: "none"
+
   } )
 
   //console.log("skill = "+newSkill)
@@ -92,6 +97,38 @@ exports.saveEvidence = ( req, res ) => {
       res.send( error );
     } )
   }
+
+
+  exports.updateEvidence = ( req, res ) => {
+    //console.log("in saveSkill!")
+    //console.dir(q)
+    Evidence.findById(req.body.evidenceId)
+      .then((evidence)=>{
+        console.log('updating evidence: '+evidence)
+        console.log('\n\n here are the parameters!')
+        console.dir(req.body)
+        evidence.accepted=req.body.submit;
+        evidence.review = req.body.taReview;
+        evidence.reviewDate = new Date();
+        evidence.reviewerEmail = req.body.reviewerEmail;
+        console.log('updated evidence locally: '+evidence)
+        evidence.save()
+          .then( () => {
+            console.log('updated evidence has been saved! ')
+            res.redirect('/evidence');
+          })
+          .catch( error => {
+            res.send("error in saving evidence: "+error)
+          })
+
+      })
+      .catch(error => {
+        res.send("error in finding evidence by Id: "+error)
+      })
+      .then(() => {
+        console.log('evidence update promise complete!')
+      })
+    }
 
 
 exports.deleteEvidence = (req, res) => {

@@ -5,6 +5,27 @@ block content
     h1 Evidence of Mastery Page for #{user.googlename} ...
     p Use this page to select a skill, add evidence of mastery, and justify it
 
+  h1 All Evidence
+  h2
+    | for #{user.googleemail}
+    br
+    | in class #{classV.code}
+  form(method="post" action="deleteEvidence")
+    ol
+      each e in evidence
+        li
+          span.bg-warning
+            | #{e.accepted}
+          a(href="/evidenceItem/"+e._id)  #{e.student}/#{e.skill}
+          input(name="evidenceID" value=e._id type="checkbox")
+    input(type="submit" value="Delete checked items")
+    hr
+    script(src="javascripts/evidence.js")
+
+  hr
+  .jumbotron
+    h1 Add New Evidence
+
   form(method="post" action="saveEvidence")
     .formGroup
       label student name
@@ -33,13 +54,3 @@ block content
     hr
     input(type="submit")
   hr
-  h1 List of All getAllEvidence for #{classV.code}
-  form(method="post" action="deleteEvidence")
-    ol
-      each e in evidence
-        li
-          a(href="/evidenceItem/"+e._id)  #{e.student}/#{e.skill}
-          input(name="evidenceID" value=e._id type="checkbox")
-    input(type="submit" value="Delete checked items")
-    hr
-    script(src="javascripts/evidence.js")

@@ -27,6 +27,23 @@ const Skill = require( './models/Skill' );
 
 var app = express();
 
+var taList = [
+  "csjbs2018@gmail.com", // usual password!
+  "katherinezyb@brandeis.edu",
+  "yaeleiger@brandeis.edu",
+  "rlederer@brandeis.edu",
+  "mnkhayter@gmail.com",
+  "venusyixinsun@brandeis.edu",
+  "liuxuantong0611@gmail.com",
+  "zqhuang@brandeis.edu",
+  "mdodell@brandeis.edu",
+  "luisandinojr1@brandeis.edu",
+  "jerrypeng666@brandeis.edu",
+  "irvingperez@brandeis.edu",
+  "chungek@brandeis.edu",
+  "zepenghu@brandeis.edu"
+]
+
 // skillsRouter = require('./routes/skills'),
 const mongoose = require( 'mongoose' );
 mongoose.connect( 'mongodb://localhost/skillmastery' );
@@ -77,7 +94,10 @@ app.use((req,res,next) => {
       if (req.user.googleemail=='tjhickey@brandeis.edu'){
         console.log("Owner has logged in")
         res.locals.status = 'teacher'
-      } else {
+      } if (taList.includes(req.user.googleemail)){
+        console.log("A TA has logged in")
+        res.locals.status = 'ta'
+      }else {
         console.log('student has logged in')
         res.locals.status = 'student'
       }
@@ -102,6 +122,7 @@ app.get('/login', function(req,res){
 
 // route for logging out
 app.get('/logout', function(req, res) {
+        req.session.destroy((error)=>{console.log("Error in destroying session: "+error)});
         req.logout();
         res.redirect('/');
     });
@@ -179,6 +200,7 @@ app.get('/evidence',
 
 app.post('/saveEvidence', isLoggedIn, evidenceController.saveEvidence );
 app.post('/deleteEvidence', isLoggedIn, evidenceController.deleteEvidence );
+app.post('/taReview',  evidenceController.updateEvidence );
 
 app.get('/users',usersController.getAllUsers)
 app.get('/users/:id',

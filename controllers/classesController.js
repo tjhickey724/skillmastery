@@ -10,11 +10,12 @@ exports.selectClass = (req,res) => {
   console.dir(req.params)
 
   console.dir(req.user.classIds.length)
-  Class.findOne({pin:req.params.pin})
+  Class.findOne({$or:[{pin:req.params.pin},{tapin:req.params.pin}]})
     .exec()
     .then((classV)=>{
       if (classV){
         req.session.classV = classV
+        req.session.isTA = (classV.tapin == req.params.pin)
         res.render('class',{classV:classV})
       } else {
         console.dir(classV)
@@ -30,11 +31,12 @@ exports.selectClass = (req,res) => {
 */
 exports.lookupClass = (req,res,next) => {
   console.log('in lookupClass')
-  Class.findOne({pin:req.body.pin})
+  Class.findOne({$or:[{pin:req.params.pin},{tapin:req.params.pin},{ownerEmail:req.session.googleemail}]})
     .exec()
     .then((classV)=> {
       if (classV){
         req.session.classV = classV
+        req.session.isTA = (classV.tapin == req.params.pin)
         next()
         //res.render('class',{classV:classV})
       } else {
@@ -71,9 +73,6 @@ exports.addClass = (req,res) => {
   */
 
   if (! containsString(req.user.classIds,req.session.classV._id )) {
-    console.log(JSON.stringify(req.user.classIds,null,2))
-    console.log(JSON.stringify(req.session.classV._id))
-    console.log('eqtest='+(JSON.stringify(req.session.classV._id) == JSON.stringify(req.user.classIds[0])))
 
     req.user.classIds.push(req.session.classV._id)
     req.user.save()
@@ -112,7 +111,7 @@ exports.getAllClasses = ( req, res ) => {
 exports.attachClasses = ( req, res, next ) => {
   console.log('in attachClasses')
   if (req.user) {
-    Class.find( {_id: req.user.classIds} )
+    Class.find( {$or:[{_id: req.user.classIds} ,{ownerEmail:req.session.googleemail}] })
       .exec()
       .then( ( classes ) => {
         res.locals.classes = classes
@@ -142,9 +141,11 @@ exports.saveClass = ( req, res ) => {
   console.dir(req.user._id)
   //console.dir(req)
   let newcode = 1000000+Math.floor(8999999*Math.random())
+  let newcode2 = 1000000+Math.floor(8999999*Math.random())
   let newClass = new Class( {
     code: req.body.code,
     pin: newcode,
+    tapin: newcode2,
     ownerEmail: req.user.googleemail
   } )
 

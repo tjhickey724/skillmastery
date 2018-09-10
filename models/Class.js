@@ -6,6 +6,7 @@ var classSchema = Schema( {
   semester: String,
   code: String,
   pin: String,
+  tas: [Schema.Types.ObjectId], // user_ids for tas
   ownerEmail: String
 } );
 

@@ -15,7 +15,7 @@ html(lang="en")
           li.nav-item
             a.nav-link.active(href="/about") About
           if loggedIn && classV
-            if status=='teacher'
+            if status=='teacher' || status=='ta'
               li.nav-item
                 a.nav-link.active(href="/classes") Classes
               li.nav-item
