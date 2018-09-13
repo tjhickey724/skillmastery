@@ -17,6 +17,7 @@ block content
           th Skill
           th Status
           th TA
+          th reviewer
           th Student
           th Delete?
           th Date
@@ -28,7 +29,9 @@ block content
             td.bg-warning
               | #{e.accepted}
             td
-              | TA:#{e.taEmail}
+              | #{e.taEmail}
+            td
+              | #{e.reviewerEmail}
             td
               a(href="/evidenceItem/"+e._id)  #{e.student}
             td
