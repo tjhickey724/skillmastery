@@ -3,6 +3,7 @@ extends layoutBS
 block content
 
   h1 Evidence  for #{e.skill} by #{e.student}
+  p.bg-warning.padded Skill Description: #{skill.description}
   .row
     .col-md-6
       br
@@ -24,7 +25,7 @@ block content
       | on #{e.reviewDate}
       hr
       h2 Review:
-      pre.bg-warning.padded
+      pre.padded
         | #{e.review}
       hr
     .col-md-6
@@ -42,7 +43,7 @@ block content
           | reviewer:
           input#reviewerEmail(type="text" name="reviewerEmail" value=user.googleemail readonly="true")
           br
-          textarea#taReview.padded(rows="5" cols="100%" name="taReview" placeholder="add your review here")
+          textarea#taReview.padded.bg-warning(rows="5" cols="100%" name="taReview" placeholder="add your review here")
             | #{e.review}
           hr
           input.btn-lg.btn-primary#acceptEvidence(type="submit" name="submit" value="Accept")

@@ -58,7 +58,11 @@ exports.getEvidenceItem = ( req, res, next ) => {
     .exec()
     .then( ( evidence ) => {
       //console.dir(evidence)
-      res.render('evidenceItem',{e:evidence})
+      console.log("skill is "+evidence.skill);
+      console.log(res.locals.skills)
+      const skillObj=(res.locals.skills.filter((skill)=>(skill.name==evidence.skill))[0])||{}
+      console.log(JSON.stringify(skillObj,null,2))
+      res.render('evidenceItem',{e:evidence,skill:skillObj})
     } )
     .catch( ( error ) => {
       console.log( error.message );

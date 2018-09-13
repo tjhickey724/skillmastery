@@ -203,6 +203,7 @@ app.post('/skill', (req,res)=> {
 })
 //app.get('/evidenceItem/:id',evidenceController.getEvidenceItem );
 app.get('/evidenceItem/:id',
+          skillsController.attachSkills,
           evidenceController.getEvidenceItem );
 
 app.get('/evidence',
