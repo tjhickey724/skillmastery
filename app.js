@@ -198,7 +198,7 @@ app.post('/skill', (req,res)=> {
     .then((skill) =>{
       console.log("in Skill finder")
       console.dir(skill)
-      res.json("Cut/Paste code which demonstrates<br>"+skill.description)
+      res.json("Cut/Paste code which demonstrates the following skill(s):<br><br>"+skill.description)
     })
 })
 //app.get('/evidenceItem/:id',evidenceController.getEvidenceItem );
