@@ -3,44 +3,47 @@ extends layoutBS
 block content
 
   h1 Evidence  for #{e.skill} by #{e.student}
-  br
-  | submitted on #{e.evidenceDate}
-  h3 Evidence
-  pre
-    | #{e.evidence}
-  hr
-  h3 Student explanation of evidence
-  pre
-    | #{e.description}
-  hr
-  b accept/reject status:
-  span.bg-warning
-    | #{e.accepted}
-  br
-  | by #{e.reviewerEmail}
-  br
-  | on #{e.reviewDate}
-  hr
-  h2 Review:
-  pre.bg-warning
-    | #{e.review}
-  hr
-  if status=='ta'
-    form(method="post" action="/taReview")
+  .row
+    .col-md-6
       br
-      h2 TA response to the Evidence and explanation
+      | submitted on #{e.evidenceDate}
+      h3 Evidence
+      pre.bg-success.padded
+        | #{e.evidence}
+      hr
+      h3 Student explanation of evidence
+      pre.bg-success.padded
+        | #{e.description}
+      hr
+      b accept/reject status:
+      span.warning
+        | #{e.accepted}
       br
-      | student:
-      input#student(type="text" value=e.student name="studentEmail" readonly="true")
+      | by #{e.reviewerEmail}
       br
-      |id:
-      input(type="text" value=e._id name="evidenceId" readonly="true")
-      br
-      | reviewer:
-      input#reviewerEmail(type="text" name="reviewerEmail" value=user.googleemail readonly="true")
-      br
-      textarea#taReview(rows="5" cols="100%" name="taReview" placeholder="add your review here")
+      | on #{e.reviewDate}
+      hr
+      h2 Review:
+      pre.bg-warning.padded
         | #{e.review}
       hr
-      input.btn-lg.btn-primary#acceptEvidence(type="submit" name="submit" value="Accept")
-      input.btn-lg.btn-primary.float-right#rejectEvidence(type="submit" name="submit" value="Reject")
+    .col-md-6
+      if status=='ta'
+        form(method="post" action="/taReview")
+          br
+          h2 TA response to the Evidence and explanation
+          br
+          | student:
+          input#student(type="text" value=e.student name="studentEmail" readonly="true")
+          br
+          |id:
+          input(type="text" value=e._id name="evidenceId" readonly="true")
+          br
+          | reviewer:
+          input#reviewerEmail(type="text" name="reviewerEmail" value=user.googleemail readonly="true")
+          br
+          textarea#taReview.padded(rows="5" cols="100%" name="taReview" placeholder="add your review here")
+            | #{e.review}
+          hr
+          input.btn-lg.btn-primary#acceptEvidence(type="submit" name="submit" value="Accept")
+          input.btn-lg.btn-primary.float-right#rejectEvidence(type="submit" name="submit" value="Reject")

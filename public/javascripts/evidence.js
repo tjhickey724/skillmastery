@@ -1,5 +1,5 @@
 console.log("in evidence.js")
-
+const skill = document.getElementById('skill')
 skill.addEventListener('change',(event)=>{
   console.log('in change event')
   console.dir(event)
