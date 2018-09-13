@@ -16,7 +16,8 @@ exports.selectClass = (req,res) => {
       if (classV){
         req.session.classV = classV
         req.session.isTA = (classV.tapin == req.params.pin)
-        res.render('class',{classV:classV})
+	res.locals.classV = classV
+        res.render('class')
       } else {
         console.dir(classV)
         res.send("please enter a valid pin, not pin="+req.params.pin)
@@ -30,16 +31,19 @@ exports.selectClass = (req,res) => {
    this looks up the class with the specified pin, or sends an error message
 */
 exports.lookupClass = (req,res,next) => {
-  console.log('in lookupClass')
-  Class.findOne({$or:[{pin:req.params.pin},{tapin:req.params.pin},{ownerEmail:req.session.googleemail}]})
+  console.log('\nin lookupClass:'+req.params.pin)
+  console.dir(req.params)
+  console.log("is req.params ...\n\n")
+  const thePin = req.params.pin || req.body.pin
+  Class.findOne({pin:thePin})
     .exec()
     .then((classV)=> {
       if (classV){
+	console.log('found a class:'+classV.pin+" "+classV)
         req.session.classV = classV
-        req.session.isTA = (classV.tapin == req.params.pin)
         next()
         //res.render('class',{classV:classV})
-      } else {
+      } else{
         res.error("please enter a valid course ID")
       }
 
@@ -49,7 +53,7 @@ exports.lookupClass = (req,res,next) => {
       return []
     })
     .then( ()=>{
-      console.log('addClass promise complete')
+      console.log('lookupClass promise complete')
     })
 }
 
@@ -71,6 +75,9 @@ exports.addClass = (req,res) => {
   /* We have a class req.classV and need to add it to the user's classes ...
     then return the class page for this class...
   */
+  console.log("in addclass");
+  console.log("req.session.classV._id = "+req.session.classV._id)
+  console.log("req.user.classIds="+req.user.classIds)
 
   if (! containsString(req.user.classIds,req.session.classV._id )) {
 
@@ -83,7 +90,7 @@ exports.addClass = (req,res) => {
         res.send( error );
       } );
   } else {
-    console.log(req.session.classV.code + " is already enrolled")
+    console.log("\n\n"+req.session.classV.code + " is already enrolled")
     res.render('class',{classV:req.session.classV})
   }
 }
@@ -111,7 +118,7 @@ exports.getAllClasses = ( req, res ) => {
 exports.attachClasses = ( req, res, next ) => {
   console.log('in attachClasses')
   if (req.user) {
-    Class.find( {$or:[{_id: req.user.classIds} ,{ownerEmail:req.session.googleemail}] })
+    Class.find( {$or:[{_id: req.user.classIds}] })
       .exec()
       .then( ( classes ) => {
         res.locals.classes = classes

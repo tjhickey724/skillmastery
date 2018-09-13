@@ -104,7 +104,7 @@ app.use((req,res,next) => {
       if (req.user.googleemail=='tjhickey@brandeis.edu'){
         console.log("Owner has logged in")
         res.locals.status = 'teacher'
-      } if (taList.includes(req.user.googleemail)){
+      } else if (taList.includes(req.user.googleemail)){
         console.log("A TA has logged in")
         res.locals.status = 'ta'
       }else {
@@ -133,6 +133,7 @@ app.get('/login', function(req,res){
 // route for logging out
 app.get('/logout', function(req, res) {
         req.session.destroy((error)=>{console.log("Error in destroying session: "+error)});
+        console.log("session has been destroyed")
         req.logout();
         res.redirect('/');
     });

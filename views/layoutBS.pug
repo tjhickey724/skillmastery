@@ -12,7 +12,6 @@ html(lang="en")
       .nav
           li.nav-item
             a.nav-link.active(href="/") Home
-          if loggedIn && classV
             if status=='teacher' || status=='ta'
               li.nav-item
                 a.nav-link.active(href="/classes") Classes
@@ -20,19 +19,24 @@ html(lang="en")
                 a.nav-link.active(href="/skills") Skills
               li.nav-item
                 a.nav-link.active(href="/users") Users
-            li.nav-item
-              a.nav-link.active(href="/evidence") Evidence
-            li.nav-item
-              a.nav-link.active(href="/logout") Logout
-          else
-            li.nav-item
-              a.nav-link.active(href="/auth/google") Login
+            if classV 
+              li.nav-item
+                a.nav-link.active(href="/evidence") Evidence
+            if loggedIn
+              li.nav-item
+                a.nav-link.active(href="/logout") Logout
+            else
+              li.nav-item
+                a.nav-link.active(href="/auth/google") Login
       if classV
         span(style="float:right")
           | #{user.googleemail}
           br
           | currently Logged in to #{classV.code}
 
+      br
+      | status: #{status}
+      hr
       block content
       script(src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous")
       script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous")
