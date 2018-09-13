@@ -43,7 +43,9 @@ block content
           | reviewer:
           input#reviewerEmail(type="text" name="reviewerEmail" value=user.googleemail readonly="true")
           br
-          textarea#taReview.padded.bg-warning(rows="5" cols="100%" name="taReview" placeholder="add your review here")
+          i.bg-warning Update the review in the textarea below and press either the Accept or Reject button
+          br
+          textarea#taReview.padded(rows="5" cols="100%" name="taReview" placeholder="add your review here")
             | #{e.review}
           hr
           input.btn-lg.btn-primary#acceptEvidence(type="submit" name="submit" value="Accept")
