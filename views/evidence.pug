@@ -11,13 +11,30 @@ block content
     br
     | in class #{classV.code}
   form(method="post" action="deleteEvidence")
-    ol
-      each e in evidence
-        li
-          span.bg-warning
-            | #{e.accepted}
-          a(href="/evidenceItem/"+e._id)  #{e.student}/#{e.skill}
-          input(name="evidenceID" value=e._id type="checkbox")
+    table.table.table-bordered.table-striped
+      thead
+        tr
+          th Skill
+          th Status
+          th TA
+          th Student
+          th Delete?
+          th Date
+      tbody
+        each e in evidence
+          tr
+            td
+              a(href="/evidenceItem/"+e._id) #{e.skill}
+            td.bg-warning
+              | #{e.accepted}
+            td
+              | TA:#{e.taEmail}
+            td
+              a(href="/evidenceItem/"+e._id)  #{e.student}
+            td
+              input(name="evidenceID" value=e._id type="checkbox")
+            td
+              | #{e.evidenceDate}
     input(type="submit" value="Delete checked items")
     hr
     script(src="javascripts/evidence.js")

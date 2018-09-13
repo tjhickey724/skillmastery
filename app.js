@@ -29,6 +29,7 @@ var app = express();
 
 var taList = [
   "csjbs2018@gmail.com", // usual password!
+  "tjhickey@brandeis.edu",
   "katherinezyb@brandeis.edu",
   "yaeleiger@brandeis.edu",
   "rlederer@brandeis.edu",
@@ -77,13 +78,22 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // so don't name your routes so they conflict with the public folders
 app.use(express.static(path.join(__dirname, 'public')));
 
+const approvedLogins = ["tjhickey724@gmail.com","csjbs2018@gmail.com"];
+
 // here is where we check on their logged in status
 app.use((req,res,next) => {
   res.locals.loggedIn = false
   if (req.isAuthenticated()){
-    console.log("user has been Authenticated")
-    res.locals.user = req.user
-    res.locals.loggedIn = true
+    if (req.user.googleemail.endsWith("@brandeis.edu") ||
+          approvedLogins.includes(req.user.googleemail))
+          {
+            console.log("user has been Authenticated")
+            res.locals.user = req.user
+            res.locals.loggedIn = true
+          }
+    else {
+      res.locals.loggedIn = false
+    }
     if (req.session.classV){
       res.locals.classV=req.session.classV
       res.locals.classId = req.session.classV._id
@@ -207,6 +217,7 @@ app.get('/users/:id',
         usersController.attachUser,
         evidenceController.attachEvidence,
         usersController.getUser)
+app.post('/updateTA',usersController.updateTA)
 
 
 app.use('/', classesController.attachClasses,function(req, res, next) {

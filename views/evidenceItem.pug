@@ -4,6 +4,7 @@ block content
 
   h1 Evidence  for #{e.skill} by #{e.student}
   br
+  | submitted on #{e.evidenceDate}
   h3 Evidence
   pre
     | #{e.evidence}
@@ -12,7 +13,7 @@ block content
   pre
     | #{e.description}
   hr
-  b accept/reject status: 
+  b accept/reject status:
   span.bg-warning
     | #{e.accepted}
   br

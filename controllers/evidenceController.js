@@ -14,6 +14,7 @@ exports.getAllEvidence = ( req, res ) => {
     selector = {classCode:res.locals.classV.code}
   }
   Evidence.find( selector )
+    .sort({taEmail:1,accepted:1})
     .exec()
     .then( ( evidence ) => {
       console.dir(evidence)
@@ -34,7 +35,8 @@ exports.getAllEvidence = ( req, res ) => {
 
 exports.attachEvidence = ( req, res, next ) => {
   console.log('in attachEvidence')
-  Evidence.find( {student:res.locals.user.googleemail,classCode:res.locals.classV.code} )
+  Evidence.find( {student:res.locals.student.googleemail,classCode:res.locals.classV.code} )
+    .sort({classCode:1, students:1, skill:1})
     .exec()
     .then( ( evidence ) => {
       res.locals.evidence = evidence
@@ -78,11 +80,12 @@ exports.saveEvidence = ( req, res ) => {
     student: req.body.student,
     skill: req.body.skill,
     evidence: req.body.evidence,
+    evidenceDate: new Date(),
     description: req.body.description,
     classCode: res.locals.classV.code,
+    taEmail:req.user.taEmail,
     accepted: "awaiting review",
     review: "no review yet",
-    reviewDate: "none",
     reviewerEmail: "none"
 
   } )

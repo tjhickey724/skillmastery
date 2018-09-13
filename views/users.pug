@@ -4,7 +4,23 @@ block content
 
   h1 SkillMastery Users
 
-  ul
-    each u in users
-      li
-        a(href="/users/"+u._id) #{u.googlename}
+  form(method="post" action="/updateTA")
+    table.table.table-bordered.table-striped
+      thead
+        tr
+          td Name
+          td TA
+          td Select as your student
+      tbody
+        each u in users
+          tr
+            td
+              a(href="/users/"+u._id) #{u.googlename}
+            td
+              if u.taEmail
+                span.text-primary #{u.taEmail}
+              else
+                span.text-warning no TA assigned
+            td
+              input(type="checkbox" value=u._id name="taSelect")
+    input.btn.btn-lg.btn-primary(type="submit" value="Claim as TA")

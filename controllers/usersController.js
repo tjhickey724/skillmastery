@@ -30,7 +30,7 @@ exports.getUser = ( req, res ) => {
     .exec()
     .then( ( user ) => {
       res.render( 'user', {
-        user: user
+        student: user
       } );
     } )
     .catch( ( error ) => {
@@ -48,7 +48,7 @@ exports.attachUser = ( req, res, next ) => {
   User.findOne(objId) //{"_id": objId})
     .exec()
     .then( ( user ) => {
-      res.locals.user = user
+      res.locals.student = user
       next()
     } )
     .catch( ( error ) => {
@@ -59,3 +59,26 @@ exports.attachUser = ( req, res, next ) => {
       console.log( 'attachUser promise complete' );
     } );
 };
+
+exports.updateTA = (req,res,next) => {
+  console.log("in updateTA")
+  let taSelect = req.body.taSelect
+  if (typeof(taSelect)=='string') {
+      User.update({_id:taSelect},{taEmail:req.user.googleemail},{multi:true})
+           .exec()
+           .then(()=>{res.redirect('/users')})
+           .catch((error)=>{res.send(error)})
+  } else if (typeof(taSelect)=='object'){
+    User.update({_id:{$in:taSelect}},{taEmail:req.user.googleemail},{multi:true})
+         .exec()
+         .then(()=>{res.redirect('/users')})
+         .catch((error)=>{res.send(error)})
+  } else if (typeof(taSelect)=='undefined'){
+      console.log("This is if they didn't select any students")
+      res.redirect('/users')
+  } else {
+    console.log("This shouldn't happen!")
+    res.send(`unknown values for taSelect: ${taSelect}`)
+  }
+
+}

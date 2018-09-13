@@ -10,7 +10,8 @@ var userSchema = Schema( {
   googlename:String,
   googleemail:String,
   description: String,
-  classIds:[Schema.Types.ObjectId]
+  classIds:[Schema.Types.ObjectId],
+  taEmail: String
 } );
 
 module.exports = mongoose.model( 'User', userSchema );
