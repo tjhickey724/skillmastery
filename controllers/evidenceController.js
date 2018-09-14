@@ -14,7 +14,7 @@ exports.getAllEvidence = ( req, res ) => {
     selector = {classCode:res.locals.classV.code}
   }
   Evidence.find( selector )
-    .sort({taEmail:1,accepted:1})
+    .sort({accepted:-1,taEmail:1})
     .exec()
     .then( ( evidence ) => {
       console.dir(evidence)

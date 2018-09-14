@@ -15,11 +15,12 @@ html(lang="en")
             if status=='teacher' || status=='ta'
               li.nav-item
                 a.nav-link.active(href="/classes") Classes
-              li.nav-item
-                a.nav-link.active(href="/skills") Skills
-              li.nav-item
-                a.nav-link.active(href="/users") Users
-            if classV 
+              if classV
+                li.nav-item
+                  a.nav-link.active(href="/skills") Skills
+                li.nav-item
+                  a.nav-link.active(href="/users") Users
+            if classV
               li.nav-item
                 a.nav-link.active(href="/evidence") Evidence
             if loggedIn
