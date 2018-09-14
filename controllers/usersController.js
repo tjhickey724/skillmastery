@@ -8,7 +8,7 @@ console.log("loading the users Controller")
 exports.getAllUsers = ( req, res ) => {
   console.log('in getAllUsers')
   User.find( {} )
-    .sort({taEmail:1})
+    .sort({taEmail:1,googlename:1})
     .exec()
     .then( ( users ) => {
       res.render( 'users', {
