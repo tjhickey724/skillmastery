@@ -19,7 +19,7 @@ block content
           th TA
           th reviewer
           th Student
-          th Delete?
+          //- th Delete?
           th Date
       tbody
         each e in evidence
@@ -34,11 +34,11 @@ block content
               | #{e.reviewerEmail}
             td
               a(href="/evidenceItem/"+e._id)  #{e.student}
-            td
+            //- td
               input(name="evidenceID" value=e._id type="checkbox")
             td
               | #{e.evidenceDate}
-    input(type="submit" value="Delete checked items")
+    //- input(type="submit" value="Delete checked items")
     hr
 
 

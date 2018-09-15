@@ -29,6 +29,7 @@ var app = express();
 
 var taList = [
   "csjbs2018@gmail.com", // usual password!
+  "vanio@brandeis.edu",
   "tjhickey@brandeis.edu",
   "katherinezyb@brandeis.edu",
   "yaeleiger@brandeis.edu",
