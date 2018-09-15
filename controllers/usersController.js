@@ -7,7 +7,8 @@ console.log("loading the users Controller")
 // this displays all of the skills
 exports.getAllUsers = ( req, res ) => {
   console.log('in getAllUsers')
-  User.find( {} )
+  const selector = {classIds:res.locals.classId}
+  User.find( selector )
     .sort({taEmail:1,googlename:1})
     .exec()
     .then( ( users ) => {
