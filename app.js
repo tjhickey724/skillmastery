@@ -39,7 +39,7 @@ var taList = [
   "katherinezyb@brandeis.edu",
   "yaeleiger@brandeis.edu",
   "rlederer@brandeis.edu",
-  "mnkhayter@gmail.com",
+  "aramk@brandeis.edu",
   "venusyixinsun@brandeis.edu",
   "liuxuantong0611@gmail.com",
   "zqhuang@brandeis.edu",

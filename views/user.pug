@@ -9,14 +9,7 @@ block content
     li
       | email: #{student.googleemail}
   h2 Review Evidence
-  ul
-    each e in evidence
-      li
-        a(href="/evidenceItem/"+e._id)
-          | #{e.skill}
-          | -- "/evidenceItem/#{e._id}"
-  hr
-  h2 Delete Evidence
+
   table.table.table-bordered
     thead
       tr
