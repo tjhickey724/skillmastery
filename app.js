@@ -184,7 +184,9 @@ app.get('/class/:pin',classesController.selectClass);
 
 
 app.get('/classes', classesController.getAllClasses );
-app.post('/saveClass', classesController.saveClass );
+app.post('/saveClass',
+          classesController.checkUnique,
+          classesController.saveClass );
 app.post('/deleteClass', classesController.deleteClass );
 // here are our regular app routes ...
 // we require them to be logged in to access the skills page

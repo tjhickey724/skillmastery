@@ -11,6 +11,7 @@ var userSchema = Schema( {
   googleemail:String,
   description: String,
   classIds:[Schema.Types.ObjectId],
+  classCodes:[String],
   taEmail: String
 } );
 

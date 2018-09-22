@@ -6,8 +6,10 @@ console.log("loading the users Controller")
 
 // this displays all of the skills
 exports.getAllUsers = ( req, res ) => {
-  console.log('in getAllUsers')
-  const selector = {classIds:res.locals.classId}
+  console.log('\nin getAllUsers')
+  //const selector = {classIds:res.locals.classId}
+  const selector = {classCodes:res.locals.classV.code}
+  console.log("selector="+JSON.stringify(selector,0,null))
   User.find( selector )
     .sort({taEmail:1,googlename:1})
     .exec()

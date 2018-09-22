@@ -75,13 +75,17 @@ exports.addClass = (req,res) => {
   /* We have a class req.classV and need to add it to the user's classes ...
     then return the class page for this class...
   */
+  req.user.classCodes = req.user.classCodes || []
   console.log("in addclass");
   console.log("req.session.classV._id = "+req.session.classV._id)
   console.log("req.user.classIds="+req.user.classIds)
+  console.log("req.user.classCodes="+req.user.classCodes)
 
-  if (! containsString(req.user.classIds,req.session.classV._id )) {
+  if (! containsString(req.user.classCodes,req.session.classV.code )) {
 
-    req.user.classIds.push(req.session.classV._id)
+    //req.user.classIds.push(req.session.classV._id)
+
+    req.user.classCodes.push(req.session.classV.code)
     req.user.save()
       .then( () => {
         res.render('class',{classV:req.session.classV})
@@ -98,7 +102,7 @@ exports.addClass = (req,res) => {
 // this displays all of the classes
 exports.getAllClasses = ( req, res ) => {
   console.log('in getAllClasses')
-  Class.find( {} )
+  Class.find( {ownerEmail:req.user.googleemail} )
     .exec()
     .then( ( classes ) => {
       res.render( 'classes', {
@@ -118,7 +122,7 @@ exports.getAllClasses = ( req, res ) => {
 exports.attachClasses = ( req, res, next ) => {
   console.log('in attachClasses')
   if (req.user) {
-    Class.find( {$or:[{_id: req.user.classIds}] })
+    Class.find( {$or:[{code: req.user.classCodes}] })
       .exec()
       .then( ( classes ) => {
         res.locals.classes = classes
@@ -139,7 +143,19 @@ exports.attachClasses = ( req, res, next ) => {
 
 };
 
-
+exports.checkUnique = (req,res,next) => {
+  Class.find({code:req.body.code})
+    .exec()
+    .then((classes) => {
+      if (classes.length==0) {
+        next()
+      } else {
+        res.send(req.body.code+" is already taken")
+      }
+    })
+    .catch((error)=> {res.send(error)})
+    .then(() => console.log('checkunique promise is complete!'))
+}
 
 exports.saveClass = ( req, res ) => {
   console.log("in saveClass!")
