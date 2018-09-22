@@ -17,23 +17,23 @@ block content
           | -- "/evidenceItem/#{e._id}"
   hr
   h2 Delete Evidence
-  table.table.table-bordered.table-striped
+  table.table.table-bordered
     thead
       tr
-        th delete?
-        th email
+        th status
         th skill
-        th link
-        th description
+        th date
     tbody
       each e in evidence
-        tr
-          td
+        tr(class=e.accepted)
+          //- td
             input(name="evidenceID" value=e._id type="checkbox")
-          td #{e.student} --
-          td #{e.skill}
+            td #{e.student} --
+            td #{e.skill}
+          td #{e.accepted}
           td
-            a(href=e.url) #{e.url}
-          td #{e.description}
-  input(type="submit" value="Delete checked items")
+            a(href="/evidenceItem/"+e._id)
+              | #{e.skill}
+          td #{e.evidenceDate}
+  //- input(type="submit" value="Delete checked items")
   hr

@@ -1,0 +1,27 @@
+extends layoutBS
+
+block content
+
+  h1 SkillMastery Dashboard
+  - console.log("underscore = "+(_))
+  form(method="post" action="/updateTA")
+    table.table.table-bordered.table-striped
+      thead
+        tr
+          td Name
+          td Completed
+          td Skills Mastered
+      tbody
+        each u in users
+          - const masteredSkills = _.uniq(u.skillsMastered)
+          - console.log("u="+JSON.stringify(u,0,null))
+          tr
+            td
+              a(href="/usersByEmail/"+u._id) #{u._id}
+            td
+              |#{masteredSkills.length}
+            td
+              ol
+                each s in masteredSkills
+                  li
+                    |#{s}

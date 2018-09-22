@@ -17,6 +17,14 @@ a {
   background-color: #fffff0
 }
 
+.Accept {
+  background-color: #00ff00
+}
+
+.Reject {
+  background-color: #ff0000
+}
+
 #skillDesc {
   color:blue
 }

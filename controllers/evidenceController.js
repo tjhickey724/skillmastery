@@ -94,6 +94,10 @@ exports.saveEvidence = ( req, res ) => {
 
   } )
 
+  if (req.body.skill=="Select a skill") {
+    res.send("you must select a skill! Please go back and try again.")
+  }
+
   //console.log("skill = "+newSkill)
 
   newEvidence.save()

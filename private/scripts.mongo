@@ -1,0 +1,25 @@
+# this script was used to fix the missing classes bug!
+db.users.update({},{$set:{classCodes:[]}},{multi:true})
+db.users.update({classIds:ObjectId("5b9a53a00dc5f192ec3a2f0a")},{$push:{classCodes:"cs11a-02"}},{multi:true})
+db.users.update({classIds:ObjectId("5b9a53a90dc5f192ec3a2f0b")},{$push:{classCodes:"cs11a-03"}},{multi:true})
+db.users.update({classIds:ObjectId("5b9bb36837a7c99ebc15671b")},{$push:{classCodes:"mktyp6a"}},{multi:true})
+
+
+
+db.evidences.aggregate(
+ [ {$match:{classCode:"mktyp6a"}},
+   {$bucket:{groupBy:"$student",
+            boundaries:
+            output:{count:{$sum:1}}
+            }
+    }
+])
+
+db.evidences.aggregate(
+ [ {$match:{classCode:"mktyp6a",accepted:"Accept"}},
+   {$group:{
+      _id:"$student",
+      count: { $sum: 1 },
+      skillsMastered: {$push: "$skill"}
+      }}
+])

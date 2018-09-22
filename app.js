@@ -27,6 +27,11 @@ const Skill = require( './models/Skill' );
 
 var app = express();
 
+app.locals._ = require("underscore");
+//app.locals._.uniq = require("underscore.unique");
+console.log("\nunderscore = "+app.locals._)
+console.log("uniq = "+app.locals._.uniq)
+
 var taList = [
   "csjbs2018@gmail.com", // usual password!
   "vanio@brandeis.edu",
@@ -222,7 +227,14 @@ app.get('/users/:id',
         usersController.attachUser,
         evidenceController.attachEvidence,
         usersController.getUser)
+app.get('/usersByEmail/:id',
+        usersController.attachUserByEmail,
+        evidenceController.attachEvidence,
+        (req,res)=>{res.render("user")}
+       )
 app.post('/updateTA',usersController.updateTA)
+
+app.get('/dashboard',usersController.getDashboard)
 
 
 app.use('/', classesController.attachClasses,function(req, res, next) {
