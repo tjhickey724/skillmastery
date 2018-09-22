@@ -33,22 +33,22 @@ console.log("\nunderscore = "+app.locals._)
 console.log("uniq = "+app.locals._.uniq)
 
 var taList = [
-  "csjbs2018@gmail.com", // usual password!
-  "vanio@brandeis.edu",
-  "tjhickey@brandeis.edu",
-  "katherinezyb@brandeis.edu",
-  "yaeleiger@brandeis.edu",
-  "rlederer@brandeis.edu",
-  "aramk@brandeis.edu",
+      "csjbs2018@gmail.com", // usual password!
+          "vanio@brandeis.edu",
+       "tjhickey@brandeis.edu",
+   "katherinezyb@brandeis.edu",
+      "yaeleiger@brandeis.edu",
+       "rlederer@brandeis.edu",
+          "aramk@brandeis.edu",
   "venusyixinsun@brandeis.edu",
-  "liuxuantong0611@gmail.com",
-  "zqhuang@brandeis.edu",
-  "mdodell@brandeis.edu",
+            "lxt@brandeis.edu",
+        "zqhuang@brandeis.edu",
+        "mdodell@brandeis.edu",
   "luisandinojr1@brandeis.edu",
-  "jerrypeng666@brandeis.edu",
-  "irvingperez@brandeis.edu",
-  "chungek@brandeis.edu",
-  "zepenghu@brandeis.edu"
+   "jerrypeng666@brandeis.edu",
+    "irvingperez@brandeis.edu",
+        "chungek@brandeis.edu",
+       "zepenghu@brandeis.edu"
 ]
 
 // skillsRouter = require('./routes/skills'),
