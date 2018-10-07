@@ -67,6 +67,48 @@ exports.getDashboard = ( req, res ) => {
 };
 
 
+exports.getDashboard2 = ( req, res ) => {
+  console.log('\nin getDashboard')
+  //const selector = {classIds:res.locals.classId}
+  let selector = {student:req.user.googleemail,
+                  classCode:res.locals.classV.code,
+                  accepted:'Accept'}
+  if (res.locals.status=='teacher' || res.locals.status=='ta'){
+    selector = {classCode:res.locals.classV.code}
+  }
+  console.log("selector="+JSON.stringify(selector,0,null))
+  Evidence.aggregate(
+     [
+       {$match:selector},
+       {$group:{
+          _id:'$student',
+          count:{$sum:1},
+          evidence:{$push:{accept:'$accepted',
+                            skill:'$skill',
+                            ed:'$evidenceDate',
+                            rd:'$reviewDate'
+                          }}
+       }},
+       {$sort:{'skill':1,'evidenceDate':1 }}
+  ])
+    .exec()
+    .then( (users) => {
+      res.render('dashboard2',
+          {
+            users:_.sortBy(users,'_id'),
+            _:_
+          })
+    })
+    .catch( ( error ) => {
+      console.log( error.message );
+      return [];
+    } )
+    .then( () => {
+      console.log( 'getDashboard promise complete' );
+    } );
+};
+
+
 exports.getUser = ( req, res ) => {
   console.log("in getUser")
   const objId = new mongo.ObjectId(req.params.id)

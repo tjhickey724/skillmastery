@@ -1,0 +1,24 @@
+extends layoutBS
+
+block content
+
+  h1 SkillMastery Dashboard2
+  - console.log("underscore = "+(_))
+  form(method="post" action="/updateTA")
+    table.table.table-bordered.table-striped
+      thead
+        tr
+          td Name (Link to Evidence)
+          td Skills Status
+      tbody
+        each u in users
+          tr
+            td
+              a(href="/usersByEmail/"+u._id) #{u._id}
+            td
+              ol
+                each e in u.evidence
+                  li
+                    b  #{e.skill}:
+                    i(class=e.accept)  #{e.accept}
+                    i  (#{e.ed})

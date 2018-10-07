@@ -235,6 +235,7 @@ app.get('/usersByEmail/:id',
 app.post('/updateTA',usersController.updateTA)
 
 app.get('/dashboard',usersController.getDashboard)
+app.get('/dashboard2',usersController.getDashboard2)
 
 
 app.use('/', classesController.attachClasses,function(req, res, next) {

@@ -25,6 +25,10 @@ a {
   background-color: #ff0000
 }
 
+.awaiting {
+  background-color: #ffff00
+}
+
 #skillDesc {
   color:blue
 }

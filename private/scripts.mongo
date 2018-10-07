@@ -23,3 +23,25 @@ db.evidences.aggregate(
       skillsMastered: {$push: "$skill"}
       }}
 ])
+
+
+db.evidences.aggregate(
+   [
+     {$match:{classCode:"cs11a-03"}},
+     {$group:{
+        _id:'$student',
+        count:{$sum:1},
+        ev:{$push:'$$CURRENT'}
+     }},
+     {$limit:2}
+])
+
+db.evidences.aggregate(
+   [
+     {$match:{classCode:"cs11a-03"}},
+     {$group:{
+        _id:'$student',
+        count:{$sum:1},
+        ev:{$push:{accept:'$accepted',skill:'$skill'}}
+     }}
+])
