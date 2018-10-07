@@ -53,6 +53,9 @@ exports.attachEvidence = ( req, res, next ) => {
 
 exports.attachTAData = (req, res, next) => {
   console.log('in attachTAData')
+  if  (res.locals.status!='teacher' && res.locals.status!='ta'){
+    next()
+  }
   Evidence.aggregate(
     [
       {$match:{classCode:res.locals.classV.code}},

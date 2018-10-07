@@ -5,22 +5,24 @@ block content
   h1 SkillMastery Dashboard
   - console.log("underscore = "+(_))
 
-  p
-    | TAs should try to grade about as much as everyone else
-    | Don't worry about grading only your students
-    | The goal is to provide feedback as fast as possible
 
-  h1 TA activity
-  table.table.table-striped.table-bordered
-    thead
-      tr
-        th Evidence Graded
-        th TA email
-    tbody
-      each ta in taData
+
+  if status=='teacher' || status=='ta'
+    p
+      | TAs should try to grade about as much as everyone else
+      | Don't worry about grading only your students
+      | The goal is to provide feedback as fast as possible
+    h1 TA activity
+    table.table.table-striped.table-bordered
+      thead
         tr
-          td #{ta.count}
-          td #{ta._id}
+          th Evidence Graded
+          th TA email
+      tbody
+        each ta in taData
+          tr
+            td #{ta.count}
+            td #{ta._id}
 
 
   h1 Student Activity
