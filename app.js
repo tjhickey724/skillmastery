@@ -216,6 +216,7 @@ app.get('/evidenceItem/:id',
 
 app.get('/evidence',
          skillsController.attachSkills,
+         evidenceController.attachTAData,
          evidenceController.getAllEvidence );
 
 app.post('/saveEvidence', isLoggedIn, evidenceController.saveEvidence );
@@ -235,7 +236,9 @@ app.get('/usersByEmail/:id',
 app.post('/updateTA',usersController.updateTA)
 
 app.get('/dashboard',usersController.getDashboard)
-app.get('/dashboard2',usersController.getDashboard2)
+app.get('/dashboard2',
+            evidenceController.attachTAData,
+            usersController.getDashboard2)
 
 
 app.use('/', classesController.attachClasses,function(req, res, next) {

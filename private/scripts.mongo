@@ -45,3 +45,9 @@ db.evidences.aggregate(
         ev:{$push:{accept:'$accepted',skill:'$skill'}}
      }}
 ])
+
+db.evidences.aggregate(
+  [
+    {$match:{classCode:"cs11a-02"}},
+    {$group:{_id:'$reviewerEmail',count:{$sum:1}}}
+])

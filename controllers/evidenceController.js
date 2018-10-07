@@ -51,6 +51,27 @@ exports.attachEvidence = ( req, res, next ) => {
     } );
 };
 
+exports.attachTAData = (req, res, next) => {
+  console.log('in attachTAData')
+  Evidence.aggregate(
+    [
+      {$match:{classCode:res.locals.classV.code}},
+      {$group:{_id:'$reviewerEmail',count:{$sum:1}}}
+    ])
+  .exec()
+  .then( (taData) => {
+    res.locals.taData = taData
+    next()
+  })
+  .catch( (error) =>{
+    console.log(error.message);
+    res.send(error.message)
+  })
+  .then( () => {
+    console.log('attachTAData promise complete')
+  })
+}
+
 exports.getEvidenceItem = ( req, res, next ) => {
   console.log('in getEvidenceItem')
   const objId = new mongo.ObjectId(req.params.id)
