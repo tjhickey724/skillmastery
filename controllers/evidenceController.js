@@ -148,7 +148,7 @@ exports.saveEvidence = ( req, res ) => {
         evidence.save()
           .then( () => {
             console.log('updated evidence has been saved! ')
-            res.redirect('/evidence');
+            res.redirect('/dashboard2');
           })
           .catch( error => {
             res.send("error in saving evidence: "+error)
