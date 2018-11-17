@@ -3,7 +3,9 @@ extends layoutBS
 block content
 
   h1 Evidence  for #{e.skill} by #{e.student}
-  p.bg-warning.padded Skill Description: #{skill.description}
+  p.bg-warning.padded Skill Description:
+    h2 SkillDescription 
+    .bg-warning#skillDesc #{skill.description}
   .row
     .col-md-6
       br
