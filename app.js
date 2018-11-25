@@ -217,7 +217,7 @@ app.get('/evidenceItem/:id',
 app.get('/evidence',
          skillsController.attachSkills,
          evidenceController.attachTAData,
-         evidenceController.getAllEvidence );
+         evidenceController.getAllUngradedEvidence );
 
 app.post('/saveEvidence', isLoggedIn, evidenceController.saveEvidence );
 app.post('/deleteEvidence', isLoggedIn, evidenceController.deleteEvidence );
@@ -254,6 +254,7 @@ app.use(function(req, res, next) {
 
 // error handler
 app.use(function(err, req, res, next) {
+  console.log("\n\nin arity/4 app.use!\n\n")
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

@@ -49,6 +49,7 @@ exports.lookupClass = (req,res,next) => {
 
     })
     .catch((error)=>{
+      console.log("Error in lookupClass")
       console.log(error.message)
       return []
     })
@@ -130,13 +131,14 @@ exports.attachClasses = ( req, res, next ) => {
         next()
       } )
       .catch( ( error ) => {
+        console.log("Error in attachClasses")
         console.log( error.message );
         return [];
         res.error(error.message)
       } )
-      .then( () => {
-        console.log( 'attachClasses promise complete' );
-      } );
+      //.then( () => {
+      //  console.log( 'attachClasses promise complete' );
+      //} );
   } else {
     next()
   }

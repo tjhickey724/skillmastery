@@ -32,6 +32,35 @@ exports.getAllEvidence = ( req, res ) => {
     } );
 };
 
+// this displays all of the skills
+exports.getAllUngradedEvidence = ( req, res ) => {
+  console.log('in getAllUngradedEvidence')
+  console.dir(req.user)
+  console.log(req.user.googleemail != 'tjhickey@brandeis.edu')
+  let selector = {student:req.user.googleemail,classCode:res.locals.classV.code}
+  if (res.locals.status=='teacher' || res.locals.status=='ta'){
+    selector = {classCode:res.locals.classV.code,accepted:"awaiting review"}
+  }
+  Evidence.find( selector )
+    .sort({accepted:-1,taEmail:1,skill:1})
+    .exec()
+    .then( ( evidence ) => {
+      console.dir(evidence)
+      res.render( 'evidence', {
+        evidence: evidence,
+        user:req.user,
+      } );
+    } )
+    .catch( ( error ) => {
+      console.log( error.message );
+      return [];
+    } )
+    .then( () => {
+      console.log( 'evidence promise complete' );
+    } );
+};
+
+
 
 exports.attachEvidence = ( req, res, next ) => {
   console.log('in attachEvidence')

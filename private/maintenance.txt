@@ -1,0 +1,6 @@
+Maintenance notes:
+We should regularly backup the SMA and PRA databases.
+
+For SMA this is best done with the mongodump command on gracehopper ..
+
+% mongodump 

@@ -71,8 +71,9 @@ exports.getDashboard2 = ( req, res ) => {
   console.log('\nin getDashboard')
   //const selector = {classIds:res.locals.classId}
   let selector = {student:req.user.googleemail,
-                  classCode:res.locals.classV.code,
-                  accepted:'Accept'}
+                  classCode:res.locals.classV.code
+                  //,accepted:'Accept'
+                }
   if (res.locals.status=='teacher' || res.locals.status=='ta'){
     selector = {classCode:res.locals.classV.code}
   }
@@ -104,7 +105,7 @@ exports.getDashboard2 = ( req, res ) => {
       return [];
     } )
     .then( () => {
-      console.log( 'getDashboard promise complete' );
+      console.log( 'getDashboard2 promise complete' );
     } );
 };
 
