@@ -42,7 +42,7 @@ exports.getAllUngradedEvidence = ( req, res ) => {
     selector = {classCode:res.locals.classV.code,accepted:"awaiting review"}
   }
   Evidence.find( selector )
-    .sort({accepted:-1,taEmail:1,skill:1})
+    .sort({accepted:-1,evidenceDate:1,taEmail:1,skill:1})
     .exec()
     .then( ( evidence ) => {
       console.dir(evidence)

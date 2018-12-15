@@ -38,6 +38,13 @@ block content
             td
               a(href="/usersByEmail/"+u._id) #{u._id}
             td
+              #{u.accepts.length}
+            td
+              ol
+                each a in u.accepts
+                  li
+                    i #{a}
+            td
               ol
                 each e in u.evidence
                   li

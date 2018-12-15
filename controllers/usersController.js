@@ -94,10 +94,14 @@ exports.getDashboard2 = ( req, res ) => {
   ])
     .exec()
     .then( (users) => {
+      //console.log("users[0]")
+      //console.log(JSON.stringify(users[0],null,1));
+      //console.log("users[0].accepts")
+      //console.log(JSON.stringify(getAccepts(users[0].evidence),null,1));
+      addAccepts(users)
       res.render('dashboard2',
           {
-            users:_.sortBy(users,'_id'),
-            _:_
+            users:_.sortBy(users,'numAccepts') //'_id'),
           })
     })
     .catch( ( error ) => {
@@ -108,6 +112,26 @@ exports.getDashboard2 = ( req, res ) => {
       console.log( 'getDashboard2 promise complete' );
     } );
 };
+
+function addAccepts(users){
+  users.forEach(function(u) {
+    u.accepts = getAccepts(u.evidence)
+    u.numAccepts = u.accepts.length
+  })
+}
+
+function getAccepts(evidence){
+  var accepts =
+       _.filter(evidence,
+                function(e){return e.accept=="Accept"})
+  //console.log("accepts="+JSON.stringify(accepts))
+  var skills =
+      _.pluck(accepts,'skill')
+  //console.log("skills="+JSON.stringify(skills))
+  var uniqskills =
+      _.uniq(skills)
+  return uniqskills
+}
 
 
 exports.getUser = ( req, res ) => {

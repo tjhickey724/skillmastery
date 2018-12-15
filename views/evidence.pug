@@ -9,7 +9,7 @@ block content
     | TAs should try to grade about as much as everyone else
     | Don't worry about grading only your students
 
-  
+
 
   h1 All Evidence
 
@@ -54,33 +54,34 @@ block content
   hr
   .jumbotron
     h1 Add New Evidence
-
-  form(method="post" action="saveEvidence")
-    .formGroup
-      label student name
-      input(type="text" name="student" readonly="true" value=user.googleemail)
-    .formGroup
-      h2 Skill Selection
-      p Select the skill you have mastered:
-        select#skill(name="skill")
-          option Select a skill
-          each s in skills
-            option #{s.name}
-    hr
-    #skillDesc
-    hr
-    .formGroup
-      h2 Evidence
-      p Cut/paste evidence of your mastery of the skill below
-      br
-      textarea(name="evidence" rows="10" cols="80")
-    hr
-    .formGroup
-      h2 Explanation
-      p explain what your evidence is and how it demonstrates mastery of the skill
-      br
-      textarea(name="description" rows="10" cols="80")
-    hr
-    input(type="submit")
+    p No new evidence may be added...
+  if 0==1
+    form(method="post" action="saveEvidence")
+      .formGroup
+        label student name
+        input(type="text" name="student" readonly="true" value=user.googleemail)
+      .formGroup
+        h2 Skill Selection
+        p Select the skill you have mastered:
+          select#skill(name="skill")
+            option Select a skill
+            each s in skills
+              option #{s.name}
+      hr
+      #skillDesc
+      hr
+      .formGroup
+        h2 Evidence
+        p Cut/paste evidence of your mastery of the skill below
+        br
+        textarea(name="evidence" rows="10" cols="80")
+      hr
+      .formGroup
+        h2 Explanation
+        p explain what your evidence is and how it demonstrates mastery of the skill
+        br
+        textarea(name="description" rows="10" cols="80")
+      hr
+      input(type="submit")
   hr
   script(src="javascripts/evidence.js")
