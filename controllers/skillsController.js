@@ -1,11 +1,11 @@
 'use strict';
 const Skill = require( '../models/Skill' );
-console.log("loading the skills Controller")
+//console.log("loading the skills Controller")
 
 
 // this displays all of the skills
 exports.getAllSkills = ( req, res ) => {
-  console.log('in getAllSkills')
+  //gconsle.log('in getAllSkills')
   Skill.find( {classCode:req.session.classV.code} )
     .exec()
     .then( ( skills ) => {
@@ -18,18 +18,18 @@ exports.getAllSkills = ( req, res ) => {
       return [];
     } )
     .then( () => {
-      console.log( 'skill promise complete' );
+      //console.log( 'skill promise complete' );
     } );
 };
 
 
 exports.attachSkills = ( req, res, next ) => {
-  console.log('in attachSkills')
+  //console.log('in attachSkills')
   Skill.find( {classCode:req.session.classV.code} )
     .exec()
     .then( ( skills ) => {
       res.locals.skills = skills
-      console.dir(res.locals)
+      //console.dir(res.locals)
       next()
     } )
     .catch( ( error ) => {
@@ -37,14 +37,14 @@ exports.attachSkills = ( req, res, next ) => {
       return [];
     } )
     .then( () => {
-      console.log( 'skill promise complete' );
+      //console.log( 'skill promise complete' );
     } );
 };
 
 
 
 exports.saveSkill = ( req, res ) => {
-  console.log("in saveSkill!")
+  //console.log("in saveSkill!")
   //console.dir(req)
   let newSkill = new Skill( {
     name: req.body.name,
@@ -64,7 +64,7 @@ exports.saveSkill = ( req, res ) => {
 };
 
 exports.deleteSkill = (req, res) => {
-  console.log("in deleteSkill")
+  //console.log("in deleteSkill")
   let skillName = req.body.deleteName
   if (typeof(skillName)=='string') {
       Skill.deleteOne({name:skillName,classCode:req.session.classV.code})
@@ -77,10 +77,10 @@ exports.deleteSkill = (req, res) => {
            .then(()=>{res.redirect('/skills')})
            .catch((error)=>{res.send(error)})
   } else if (typeof(skillName)=='undefined'){
-      console.log("This is if they didn't select a skill")
+      //console.log("This is if they didn't select a skill")
       res.redirect('/skills')
   } else {
-    console.log("This shouldn't happen!")
+    //console.log("This shouldn't happen!")
     res.send(`unknown skillName: ${skillName}`)
   }
 

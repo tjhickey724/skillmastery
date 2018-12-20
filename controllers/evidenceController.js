@@ -1,14 +1,14 @@
 'use strict';
 const Evidence = require( '../models/Evidence' );
 var mongo = require('mongodb');
-console.log("loading the Evidence Controller")
+//console.log("loading the Evidence Controller")
 
 
 // this displays all of the skills
 exports.getAllEvidence = ( req, res ) => {
-  console.log('in getAllEvidence')
-  console.dir(req.user)
-  console.log(req.user.googleemail != 'tjhickey@brandeis.edu')
+  //console.log('in getAllEvidence')
+  //console.dir(req.user)
+  //console.log(req.user.googleemail != 'tjhickey@brandeis.edu')
   let selector = {student:req.user.googleemail,classCode:res.locals.classV.code}
   if (res.locals.status=='teacher' || res.locals.status=='ta'){
     selector = {classCode:res.locals.classV.code}
@@ -17,7 +17,7 @@ exports.getAllEvidence = ( req, res ) => {
     .sort({accepted:-1,taEmail:1,skill:1})
     .exec()
     .then( ( evidence ) => {
-      console.dir(evidence)
+
       res.render( 'evidence', {
         evidence: evidence,
         user:req.user,
@@ -28,15 +28,15 @@ exports.getAllEvidence = ( req, res ) => {
       return [];
     } )
     .then( () => {
-      console.log( 'evidence promise complete' );
+      //console.log( 'evidence promise complete' );
     } );
 };
 
 // this displays all of the skills
 exports.getAllUngradedEvidence = ( req, res ) => {
-  console.log('in getAllUngradedEvidence')
-  console.dir(req.user)
-  console.log(req.user.googleemail != 'tjhickey@brandeis.edu')
+  //console.log('in getAllUngradedEvidence')
+  //console.dir(req.user)
+  //console.log(req.user.googleemail != 'tjhickey@brandeis.edu')
   let selector = {student:req.user.googleemail,classCode:res.locals.classV.code}
   if (res.locals.status=='teacher' || res.locals.status=='ta'){
     selector = {classCode:res.locals.classV.code,accepted:"awaiting review"}
@@ -45,7 +45,8 @@ exports.getAllUngradedEvidence = ( req, res ) => {
     .sort({accepted:-1,evidenceDate:1,taEmail:1,skill:1})
     .exec()
     .then( ( evidence ) => {
-      console.dir(evidence)
+      //console.log("**********************\n\n********\n\nIn getAllEvidence:")
+      //console.dir(evidence.length)
       res.render( 'evidence', {
         evidence: evidence,
         user:req.user,
@@ -56,14 +57,14 @@ exports.getAllUngradedEvidence = ( req, res ) => {
       return [];
     } )
     .then( () => {
-      console.log( 'evidence promise complete' );
+      //console.log( 'evidence promise complete' );
     } );
 };
 
 
 
 exports.attachEvidence = ( req, res, next ) => {
-  console.log('in attachEvidence')
+  //console.log('in attachEvidence')
   Evidence.find( {student:res.locals.student.googleemail,classCode:res.locals.classV.code} )
     .sort({classCode:1, students:1, skill:1})
     .exec()
@@ -76,12 +77,12 @@ exports.attachEvidence = ( req, res, next ) => {
       return [];
     } )
     .then( () => {
-      console.log( 'attachEvidence promise complete' );
+      //console.log( 'attachEvidence promise complete' );
     } );
 };
 
 exports.attachTAData = (req, res, next) => {
-  console.log('in attachTAData')
+  //console.log('in attachTAData')
   if  (res.locals.status!='teacher' && res.locals.status!='ta'){
     next()
   }
@@ -100,21 +101,21 @@ exports.attachTAData = (req, res, next) => {
     res.send(error.message)
   })
   .then( () => {
-    console.log('attachTAData promise complete')
+    //console.log('attachTAData promise complete')
   })
 }
 
 exports.getEvidenceItem = ( req, res, next ) => {
-  console.log('in getEvidenceItem')
+  //console.log('in getEvidenceItem')
   const objId = new mongo.ObjectId(req.params.id)
   Evidence.findOne(objId) //{"_id": objId})
     .exec()
     .then( ( evidence ) => {
       //console.dir(evidence)
-      console.log("skill is "+evidence.skill);
-      console.log(res.locals.skills)
+      //console.log("skill is "+evidence.skill);
+      //console.log(res.locals.skills)
       const skillObj=(res.locals.skills.filter((skill)=>(skill.name==evidence.skill))[0])||{}
-      console.log(JSON.stringify(skillObj,null,2))
+      //console.log(JSON.stringify(skillObj,null,2))
       res.render('evidenceItem',{e:evidence,skill:skillObj})
     } )
     .catch( ( error ) => {
@@ -122,7 +123,7 @@ exports.getEvidenceItem = ( req, res, next ) => {
       return [];
     } )
     .then( () => {
-      console.log( 'attachOneEvidence promise complete' );
+      //console.log( 'attachOneEvidence promise complete' );
     } );
 };
 
@@ -132,7 +133,7 @@ exports.getEvidenceItem = ( req, res, next ) => {
 exports.saveEvidence = ( req, res ) => {
   //console.log("in saveSkill!")
   //console.dir(q)
-  console.log('in saveEvidence')
+  //console.log('in saveEvidence')
   let newEvidence = new Evidence( {
     student: req.body.student,
     skill: req.body.skill,
@@ -169,17 +170,17 @@ exports.saveEvidence = ( req, res ) => {
     //console.dir(q)
     Evidence.findById(req.body.evidenceId)
       .then((evidence)=>{
-        console.log('updating evidence: '+evidence)
-        console.log('\n\n here are the parameters!')
-        console.dir(req.body)
+        //console.log('updating evidence: '+evidence)
+        //console.log('\n\n here are the parameters!')
+        //console.dir(req.body)
         evidence.accepted=req.body.submit;
         evidence.review = req.body.taReview;
         evidence.reviewDate = new Date();
         evidence.reviewerEmail = req.body.reviewerEmail;
-        console.log('updated evidence locally: '+evidence)
+        //console.log('updated evidence locally: '+evidence)
         evidence.save()
           .then( () => {
-            console.log('updated evidence has been saved! ')
+            //console.log('updated evidence has been saved! ')
             res.redirect('/dashboard2');
           })
           .catch( error => {
@@ -191,13 +192,13 @@ exports.saveEvidence = ( req, res ) => {
         res.send("error in finding evidence by Id: "+error)
       })
       .then(() => {
-        console.log('evidence update promise complete!')
+        //console.log('evidence update promise complete!')
       })
     }
 
 
 exports.deleteEvidence = (req, res) => {
-  console.log("in deleteEvidence")
+  //console.log("in deleteEvidence")
   let evidenceName = req.body.evidenceID
   if (typeof(evidenceName)=='string') {
       Evidence.deleteOne({_id:evidenceName})
@@ -210,10 +211,10 @@ exports.deleteEvidence = (req, res) => {
            .then(()=>{res.redirect('/evidence')})
            .catch((error)=>{res.send(error)})
   } else if (typeof(evidenceName)=='undefined'){
-      console.log("This is if they didn't select a skill")
+      //console.log("This is if they didn't select a skill")
       res.redirect('/evidence')
   } else {
-    console.log("This shouldn't happen!")
+    //console.log("This shouldn't happen!")
     res.send(`unknown evidenceName: ${evidenceName}`)
   }
 }
